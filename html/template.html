@@ -47,6 +47,10 @@
         margin: 10px;
       }
 
+      .container > div > h2 {
+        display: inline-block;
+      }
+
       .button-container {
         text-align: center;
       }
@@ -62,13 +66,19 @@
     <!-- First Container -->
     <div class="text-container">
       <div class="container">
-        <h2 id="lang1_word">Large Text in the First Container</h2>
+        <div>
+          <h2 id="lang1_word">Large Text in the First Container</h2>
+          <span id="speakButton_lang1">🗨️</span>
+        </div>
         <p id="lang1">Here is some large text content.</p>
       </div>
 
       <!-- Second Container -->
       <div class="container">
-        <h2 id="lang2_word">Large Text in the Second Container</h2>
+        <div>
+          <h2 id="lang2_word">Large Text in the Second Container</h2>
+          <span id="speakButton_lang2">🗨️</span>
+        </div>
         <p id="lang2">More large text goes here.</p>
       </div>
     </div>
@@ -78,34 +88,70 @@
       <button id="next" class="mdc-button mdc-button--raised">Next</button>
     </div>
     <script>
-      const data = {{ data }}
+        const getIsoCode = (language) => {
+          const languageMappings = {
+              "English": "en-US",
+              "Spanish": "es-ES",
+              "French": "fr-FR",
+              "German": "de-DE",
+              "Chinese": "zh-CN",
+              "Russian": "ru-RU",
+              "Japanese": "ja-JP",
+              "Portuguese": "pt-PT",
+              "Arabic": "ar-SA",
+              "Italian": "it-IT",
+              "Hungarian": "hu-HU"
+          };
+          return languageMappings[language] || "en-US";
+      }
 
-      const button = document.getElementById("next");
+            const data = {{ data }}
 
-      const lang2Word = document.getElementById("lang2_word");
-      const lang2 = document.getElementById("lang2");
-      const lang1Word = document.getElementById("lang1_word");
-      const lang1 = document.getElementById("lang1");
+            const button = document.getElementById("next");
 
-      const next = function () {
-        const randomIndex = Math.floor(Math.random() * data.length);
+            const lang2Word = document.getElementById("lang2_word");
+            const lang2 = document.getElementById("lang2");
+            const lang1Word = document.getElementById("lang1_word");
+            const lang1 = document.getElementById("lang1");
 
-        const currentData = data[randomIndex]
+            const next = function () {
+              const randomIndex = Math.floor(Math.random() * data.length);
 
-        lang1.textContent = currentData.lang1;
-        lang1Word.textContent = currentData.lang1_word;
+              const currentData = data[randomIndex]
 
-        lang2.textContent = currentData.lang2;
-        lang2Word.textContent = currentData.lang2_word;
+              lang1.textContent = currentData.lang1;
+              lang1Word.textContent = currentData.lang1_word;
 
-      };
+              lang2.textContent = currentData.lang2;
+              lang2Word.textContent = currentData.lang2_word;
 
-      button.addEventListener("click", () => {
-        console.log(event);
-        next();
-      });
+            };
 
-      next();
+            button.addEventListener("click", () => {
+              console.log(event);
+              next();
+            });
+
+            next();
+
+            const speakButton1 = document.getElementById("speakButton_lang1");
+
+            speakButton1.addEventListener("click", () => {
+                  const speech = new SpeechSynthesisUtterance();
+                  speech.text = lang1_word.textContent;
+                  speech.lang = getIsoCode(lang1.textContent)
+
+                  window.speechSynthesis.speak(speech);
+              });
+
+          const speakButton2 = document.getElementById("speakButton_lang2");
+
+          speakButton2.addEventListener("click", () => {
+                const speech = new SpeechSynthesisUtterance();
+                speech.text = lang2_word.textContent;
+                speech.lang = getIsoCode(lang2.textContent)
+                window.speechSynthesis.speak(speech);
+            });
     </script>
   </body>
 </html>
