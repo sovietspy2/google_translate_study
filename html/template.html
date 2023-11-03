@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Material Design Example</title>
+
+    <!-- Include Material Design CSS and JavaScript libraries -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@13.0.0/dist/material-components-web.min.css"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/material-components-web@13.0.0/dist/material-components-web.min.js"
+    ></script>
+
+    <!-- Custom CSS for layout -->
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f3f3f3;
+      }
+
+      .text-container {
+        display: flex;
+        flex-direction: column;
+        min-width: 50vw;
+      }
+
+      .container {
+        flex-grow: 1;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+      }
+
+      .button-container {
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .text-container {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- First Container -->
+    <div class="text-container">
+      <div class="container">
+        <h2 id="lang1_word">Large Text in the First Container</h2>
+        <p id="lang1">Here is some large text content.</p>
+      </div>
+
+      <!-- Second Container -->
+      <div class="container">
+        <h2 id="lang2_word">Large Text in the Second Container</h2>
+        <p id="lang2">More large text goes here.</p>
+      </div>
+    </div>
+
+    <!-- Next Button -->
+    <div class="button-container">
+      <button id="next" class="mdc-button mdc-button--raised">Next</button>
+    </div>
+    <script>
+      const data = {{ data }}
+
+      const button = document.getElementById("next");
+
+      const lang2Word = document.getElementById("lang2_word");
+      const lang2 = document.getElementById("lang2");
+      const lang1Word = document.getElementById("lang1_word");
+      const lang1 = document.getElementById("lang1");
+
+      const next = function () {
+        const randomIndex = Math.floor(Math.random() * data.length);
+
+        const currentData = data[randomIndex]
+
+        lang1.textContent = currentData.lang1;
+        lang1Word.textContent = currentData.lang1_word;
+
+        lang2.textContent = currentData.lang2;
+        lang2Word.textContent = currentData.lang2_word;
+
+      };
+
+      button.addEventListener("click", () => {
+        console.log(event);
+        next();
+      });
+
+      next();
+    </script>
+  </body>
+</html>
